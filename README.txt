@@ -33,3 +33,14 @@ In the admin panel, find Plugins->Plugins,click it, active Easy Responsive Tabs.
 Now you can see the few new button in the TinyMCE Editor in post and pages, use this buttons to create responsive tabs in  pages/posts content.
 
 It's that simple ... just what the name suggests
+
+
+== Screenshots ==
+
+1. Easy Responsive Tabs Output
+
+== Changelog ==
+
+= 1.1 =
+
+[Fixed] Resolved the conflict with [Easy Bootstrap Shortcode](http://wordpress.org/plugins/easy-bootstrap-shortcodes/).
