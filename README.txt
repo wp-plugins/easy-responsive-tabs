@@ -39,6 +39,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.2 =
+
+[Fixed] Resolved title issue for multiple responsive tabs on same page
+
 = 1.1 =
 
 [Fixed] Resolved the conflict with [Easy Bootstrap Shortcode](http://wordpress.org/plugins/easy-bootstrap-shortcodes/).
