@@ -3,7 +3,7 @@
   Plugin Name: Easy Responsive Tabs
   Plugin URI: http://www.oscitasthemes.com
   Description: Make bootstrap tabs res.
-  Version: 1.1
+  Version: 1.2
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
@@ -129,7 +129,7 @@ class easyResponsiveTabs {
 			$output .= '</div>';
 			$output.="<script>
         jQuery(document).ready(function() {
-            jQuery('.osc-res-nav').tabdrop({
+            jQuery('#oscitas-restabs-{$id}').tabdrop({
             'text': '".$text."'
             });
         });
