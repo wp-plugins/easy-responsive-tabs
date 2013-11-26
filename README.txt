@@ -39,6 +39,16 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.4 =
+
+* [Update] Option to customize Tab Color.
+* [Update] Option to customize Tab Heading Color.
+* [Update] Option to customize Active Tab Color.
+* [Update] Option to customize Active Tab Heading Color.
+* [Update] Option to customize Tab Hover Color.
+* [Update] Option to customize Tab Content Background Color.
+
+
 = 1.3 =
 
 [Fixed] Adding ' in the title break javascript issue resolved, thanks to Nikoya.

@@ -88,6 +88,32 @@ function ert_create_oscitas_responsive_tab(){
 				<th><label for="oscitas-restabs-number">Number of Tabs</label></th>\
 				<td><input type="text" name="title" id="oscitas-restabs-number" value="4"/><br/>Enter a numeric value, Default is 4</td>\
 			</tr>\
+			<tr>\
+				<th><label for="oscitas-restabs-tabcolor">Tab Color</label></th>\
+				<td> <input type="text" value="" id="oscitas-restabs-tabcolor" class="ert_color_selector" />\
+                </div></td>\
+			</tr>\
+			<tr>\
+				<th><label for="oscitas-restabs-tabheadcolor">Tab Heading Color</label></th>\
+				<td> <input type="text" value="" id="oscitas-restabs-tabheadcolor" class="ert_color_selector" />\
+                </div></td>\
+			</tr>\
+			<tr>\
+				<th><label for="oscitas-restabs-seltabcolor">Active Tab Color</label></th>\
+				<td> <input type="text" value="" id="oscitas-restabs-seltabcolor" class="ert_color_selector" /></td>\
+			</tr>\
+			<tr>\
+				<th><label for="oscitas-restabs-seltabheadcolor">Active Tab Heading Color</label></th>\
+				<td> <input type="text" value="" id="oscitas-restabs-seltabheadcolor" class="ert_color_selector" /></td>\
+			</tr>\
+			<tr>\
+				<th><label for="oscitas-restabs-tabhovercolor">Tab Hover Color</label></th>\
+				<td> <input type="text" value="" id="oscitas-restabs-tabhovercolor" class="ert_color_selector" /></td>\
+			</tr>\
+			<tr>\
+				<th><label for="oscitas-restabs-contentcolor">Tab Content BG Color</label></th>\
+				<td> <input type="text" value="" id="oscitas-restabs-contentcolor" class="ert_color_selector" /></td>\
+			</tr>\
              <tr>\
 				<th><label for="oscitas-restabs-class">Custom Class</label></th>\
 				<td><input type="text" name="line" id="oscitas-restabs-class" value=""/><br />\
@@ -100,10 +126,18 @@ function ert_create_oscitas_responsive_tab(){
 		</div>');
     var table = form.find('table');
     form.appendTo('body').hide();
+    jQuery('.ert_color_selector').wpColorPicker();
     form.find('#oscitas-restab-submit').click(function(){
 
         var cusclass='',icon='',text='',pills='',position='',item= 0,eactive='';
         var num=table.find('#oscitas-restabs-number').val();
+        var color=['tabcolor','tabheadcolor','seltabcolor','seltabheadcolor','tabhovercolor','contentcolor'],ert_color='';
+        jQuery.each(color,function(index,val){
+            if(jQuery('#oscitas-restabs-'+val).val()!=''){
+                ert_color +=' '+val+'="'+jQuery('#oscitas-restabs-'+val).val()+'"';
+            }
+
+        })
         if(jQuery('#oscitas-restabs-pills').prop('checked')){
             pills=' pills="nav-pills"';
 
@@ -127,7 +161,7 @@ function ert_create_oscitas_responsive_tab(){
         } else{
             item=4;
         }
-            var shortcode = '[restabs'+position+pills+icon+text+cusclass;
+            var shortcode = '[restabs'+position+pills+icon+text+cusclass+ert_color;
         shortcode += ']';
 
             for(var i=1;i<=item;i++){

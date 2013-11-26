@@ -3,7 +3,7 @@
   Plugin Name: Easy Responsive Tabs
   Plugin URI: http://www.oscitasthemes.com
   Description: Make bootstrap tabs res.
-  Version: 1.3
+  Version: 1.4
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
@@ -12,12 +12,15 @@ define('ERT_VERSION', '1.0');
 define('ERT_BASE_URL', plugins_url('',__FILE__));
 define('ERT_ASSETS_URL', ERT_BASE_URL . '/assets/');
 define('ERT_BASE_DIR_LONG', dirname(__FILE__));
+$_ert_restabs=array('current_id'=>0);
 class easyResponsiveTabs {
 	private $resjs_path;
 	private $rescss_path;
 	private $plugin_name;
 
 	function __construct(){
+		session_start();
+		$_SESSION['ert_js']='';
 		$pluginmenu=explode('/',plugin_basename(__FILE__));
 		$this->plugin_name=$pluginmenu[0];
 		$this->resjs_path='js/bootstrap-tabdrop.js';
@@ -29,12 +32,25 @@ class easyResponsiveTabs {
 			add_filter( "plugin_action_links_".plugin_basename( __FILE__ ), array($this, 'osc_ert_settings_link' ));
 			add_action('admin_enqueue_scripts', array($this, 'ert_admin_scripts'));
 			add_action('wp_enqueue_scripts', array($this, 'ert_enqueue_scripts'));
+			add_action('wp_footer', array($this, 'ert_include_js_last'));
+
 		}
 		add_shortcode('restabs', array($this,'ert_theme_tabs'));
 		add_shortcode('restab', array($this,'ert_theme_tab'));
 
 	}
+	public function ert_include_js_last(){
+		if (!apply_filters('ert_bootstrap_js_url',false)) {
 
+			?>
+			<script type="text/javascript">
+
+				jQuery('body').append('<script type="text/javascript" src="<?php echo ERT_ASSETS_URL.'js/bootstrap-dropdown.js';?>"><script>');
+			</script>
+		<?php
+
+		}
+	}
 	public function ert_activate_plugin(){
 		$isSet=apply_filters('ert_custom_option',false);
 		if (!$isSet) {
@@ -94,20 +110,44 @@ class easyResponsiveTabs {
 	}
 
 	public function ert_theme_tabs($params, $content = null) {
-		global $_ert_restabs;
+		global $_ert_restabs, $shortcode_tags;
 		extract(shortcode_atts(array(
 					'id' => count($_ert_restabs),
 					'class' => '',
 					'pills' =>'',
 					'position'=>'',
 					'text'=>'',
-					'icon'=>''
-
-
+					'icon'=>'',
+					'tabcolor'=>'',
+					'tabheadcolor'=>'',
+					'seltabcolor'=>'',
+					'seltabheadcolor'=>'',
+					'tabhovercolor'=>'',
+					'contentcolor'=>''
 				), $params));
 		$_ert_restabs[$id] = array();
-        $text = addslashes($text);
+        $_ert_restabs['current_id'] = count($_ert_restabs)-1;
 		do_shortcode($content);
+		if($tabcolor!=''){
+			$tabcolor='#oscitas-restabs-' . $id .' li a{background-color:'.$tabcolor.';}';
+		}
+		if($tabheadcolor!=''){
+			$tabheadcolor='#oscitas-restabs-' . $id .' li a { color:'.$tabheadcolor.';}';
+		}
+		if($seltabcolor!=''){
+			$seltabcolor='#oscitas-restabs-' . $id .' li.active a { background-color:'.$seltabcolor.' !important;}';
+		}
+		if($seltabheadcolor!=''){
+			$seltabheadcolor='#oscitas-restabs-' . $id .' li.active a{color:'.$seltabheadcolor.';}';
+		}
+
+		if($tabhovercolor!=''){
+			$tabhovercolor='#oscitas-restabs-' . $id .' li a:hover,#oscitas-restabs-' . $id .' li a:focus{background-color:'.$tabhovercolor.';}';
+		}
+		if($contentcolor!=''){
+			$contentcolor='#oscitas-restabcontent-' . $id .'{background-color:'.$contentcolor.';}';
+		}
+
 		if($icon=='true'){
 			$text='<i class="res_tab_icon"></i>'.$text;
 		}
@@ -117,30 +157,30 @@ class easyResponsiveTabs {
 		else{
 			$navclass='nav-tabs';
 		}
+        $output = '';
 		if($position=='tabs-below'){
-			$scontent = '<div
-    class="tab-content">' . implode('', $_ert_restabs[$id]['panes']) . '</div><ul class="nav osc-res-nav '.$navclass.'" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$id]['tabs']) . '</ul>';
+			$scontent = '<ul
+    class="tab-content" id="oscitas-restabcontent-' . $id . '">' . implode('', $_ert_restabs[$id]['panes']) . '</ul><ul class="nav osc-res-nav '.$navclass.'" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$id]['tabs']) . '</ul>';
 		} else{
-			$scontent = '<ul class="nav osc-res-nav '.$navclass.'" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$id]['tabs']) . '</ul><div
-    class="tab-content">' . implode('', $_ert_restabs[$id]['panes']) . '</div>';
+			$scontent = '<ul class="nav osc-res-nav '.$navclass.'" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$id]['tabs']) . '</ul><ul
+    class="tab-content" id="oscitas-restabcontent-' . $id . '">' . implode('', $_ert_restabs[$id]['panes']) . '</ul>';
 		}
 
 		if (trim($scontent) != "") {
 			$output = '<div class="tabbable '.$class.' '.$position.'">' . $scontent;
 			$output .= '</div>';
-			$output.="<script>
-        jQuery(document).ready(function() {
-            jQuery('#oscitas-restabs-{$id}').tabdrop({
-            'text': '".$text."'
-            });
-        });
-    </script>";
-			return $output;
-		} else {
-			return "";
-		}
 
-	}
+			$_SESSION['ert_js'].="
+			jQuery('#oscitas-restabs-$id').tabdrop({
+            'text': '".$text."'
+            });";
+			$_SESSION['ert_css'].=$tabcolor.$tabheadcolor.$seltabcolor.$seltabheadcolor.$tabhovercolor.$contentcolor;
+
+		}
+        $_ert_restabs['current_id'] = $_ert_restabs['current_id']-1;
+        return $output;
+
+    }
 
 
 	public function ert_theme_tab($params, $content = null) {
@@ -150,17 +190,17 @@ class easyResponsiveTabs {
 					'active' => '',
 				), $params));
 
-		$index = count($_ert_restabs) - 1;
+		$index = $_ert_restabs['current_id'];
 		if (!isset($_ert_restabs[$index]['tabs'])) {
 			$_ert_restabs[$index]['tabs'] = array();
 		}
-		$pane_id = 'ert-pane-' . $index . '-' .  count($_ert_restabs[$index]['tabs']);
+		$pane_id = 'ert_pane' . $index . '-' .  count($_ert_restabs[$index]['tabs']);
 		$_ert_restabs[$index]['tabs'][] = '<li class="' . $active . '"><a href="#' . $pane_id . '" data-toggle="tab">' . $title
 			. '</a></li>';
-		$_ert_restabs[$index]['panes'][] = '<div class="tab-pane ' . $active . '" id="'
+		$_ert_restabs[$index]['panes'][] = '<li class="tab-pane ' . $active . '" id="'
 			. $pane_id . '">'
 			. do_shortcode
-			(trim($content)) . '</div>';
+			(trim($content)) . '</li>';
 	}
 	public function ert_enqueue_scripts(){
 		wp_enqueue_script('jquery');
@@ -179,7 +219,7 @@ class easyResponsiveTabs {
 			}
 			if($ertjs==1){
 				if (!apply_filters('ert_bootstrap_js_url',false)) {
-					wp_enqueue_script('bootstrap_dropdown',ERT_ASSETS_URL.'js/bootstrap-dropdown.js',array('jquery'),ERT_VERSION,true);
+//					wp_enqueue_script('bootstrap_dropdown',ERT_ASSETS_URL.'js/bootstrap-dropdown.js',array('jquery'),ERT_VERSION,true);
 					wp_enqueue_script('bootstrap_tab',ERT_ASSETS_URL.'js/bootstrap-tab.js',array('jquery'),ERT_VERSION,true);}
 				else{
 					wp_enqueue_script('ertbootstrap', apply_filters('ert_bootstrap_js_url',false),array('jquery'),ERT_VERSION,true);
@@ -188,8 +228,10 @@ class easyResponsiveTabs {
 			}
 		}
 		wp_enqueue_script('ert_tab_js',ERT_ASSETS_URL.$this->resjs_path,array('jquery'),ERT_VERSION,true);
+		wp_enqueue_script('ert_js',ERT_ASSETS_URL.'js/ert_js.php',array('jquery','ert_tab_js'),ERT_VERSION,true);
 		wp_enqueue_style('ert_tab_css',ERT_ASSETS_URL.$this->rescss_path);
 		wp_enqueue_style('ert_tab_icon_css',ERT_ASSETS_URL.'css/res_tab_icon.css');
+		wp_enqueue_style('ert_css',ERT_ASSETS_URL.'css/ert_css.php');
 
 	}
 
@@ -197,6 +239,8 @@ class easyResponsiveTabs {
 		global $pagenow;
 		if ('post-new.php' == $pagenow || 'post.php' == $pagenow) {
 			wp_enqueue_script('jquery');
+			wp_enqueue_style('wp-color-picker');
+			wp_enqueue_script('wp-color-picker');
 			if (!apply_filters('ert_custom_bootstrap_admin_css',false)) {
 				wp_enqueue_style('bootstrap_admin', ERT_ASSETS_URL.'css/bootstrap_admin.min.css');
 			}
