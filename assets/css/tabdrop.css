@@ -10,3 +10,14 @@
 .nav-pills {
   position: relative;
 }
+
+ul.dropdown-menu{
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+ul.dropdown-menu li{
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}

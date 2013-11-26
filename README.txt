@@ -41,16 +41,25 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.4 =
+
+* [Update] Option to customize Tab Color.
+* [Update] Option to customize Tab Heading Color.
+* [Update] Option to customize Active Tab Color.
+* [Update] Option to customize Active Tab Heading Color.
+* [Update] Option to customize Tab Hover Color.
+* [Update] Option to customize Tab Content Background Color.
+
 = 1.3 =
 
-[Fixed] Adding ' in the title break javascript issue resolved, thanks to Nikoya.
+* [Fixed] Adding ' in the title break javascript issue resolved, thanks to Nikoya.
 
 
 = 1.2 =
 
-[Fixed] Resolved title issue for multiple responsive tabs on same page
+* [Fixed] Resolved title issue for multiple responsive tabs on same page
 
 = 1.1 =
 
-[Fixed] Resolved the conflict with [Easy Bootstrap Shortcode](http://wordpress.org/plugins/easy-bootstrap-shortcodes/).
+* [Fixed] Resolved the conflict with [Easy Bootstrap Shortcode](http://wordpress.org/plugins/easy-bootstrap-shortcodes/).
 

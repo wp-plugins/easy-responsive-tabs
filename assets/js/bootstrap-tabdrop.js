@@ -109,7 +109,7 @@
 	};
 
 	$.fn.tabdrop.defaults = {
-		text: '<i class="icon-align-justify"></i>'
+		text: 'More'
 	};
 
 	$.fn.tabdrop.Constructor = TabDrop;
