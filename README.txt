@@ -14,6 +14,7 @@ Easy Responsive Tabs enable you to add responsive bootstrap 3.0 tabs in your pag
 
 Easy Responsive Tabs is bootstrap 3.0 compatible plugin which add icons to wordpress editor (tinyMCE Shortcode Buttons) and one can add bootstrap style responsive tabs to their website just by clicking on tinyMCE  editor icon.
 
+
 [Easy Responsive Tabs Demo](http://demo.oscitasthemes.com/demos/easy-responsive-tabs/)
 
 For bootstrap shortcodes, check our plugin [Easy Bootstrap Shortcodes](http://wordpress.org/plugins/easy-bootstrap-shortcodes/)
@@ -33,11 +34,16 @@ Now you can see the few new button in the TinyMCE Editor in post and pages, use 
 
 It's that simple ... just what the name suggests
 
+
 == Screenshots ==
 
 1. Easy Responsive Tabs Output
 
 == Changelog ==
+
+= 1.5 =
+
+* [fixed] Undefined index 'ert_css' issue fixed.
 
 = 1.4 =
 
@@ -48,16 +54,16 @@ It's that simple ... just what the name suggests
 * [Update] Option to customize Tab Hover Color.
 * [Update] Option to customize Tab Content Background Color.
 
-
 = 1.3 =
 
-[Fixed] Adding ' in the title break javascript issue resolved, thanks to Nikoya.
+* [Fixed] Adding ' in the title break javascript issue resolved, thanks to Nikoya.
+
 
 = 1.2 =
 
-[Fixed] Resolved title issue for multiple responsive tabs on same page
-
+* [Fixed] Resolved title issue for multiple responsive tabs on same page
 
 = 1.1 =
 
-[Fixed] Resolved the conflict with [Easy Bootstrap Shortcode](http://wordpress.org/plugins/easy-bootstrap-shortcodes/).
+* [Fixed] Resolved the conflict with [Easy Bootstrap Shortcode](http://wordpress.org/plugins/easy-bootstrap-shortcodes/).
+
