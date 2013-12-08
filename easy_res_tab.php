@@ -3,7 +3,7 @@
   Plugin Name: Easy Responsive Tabs
   Plugin URI: http://www.oscitasthemes.com
   Description: Make bootstrap tabs res.
-  Version: 1.4
+  Version: 1.5
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
@@ -19,8 +19,9 @@ class easyResponsiveTabs {
 	private $plugin_name;
 
 	function __construct(){
-		session_start();
+		//session_start();
 		$_SESSION['ert_js']='';
+		$_SESSION['ert_css']='';
 		$pluginmenu=explode('/',plugin_basename(__FILE__));
 		$this->plugin_name=$pluginmenu[0];
 		$this->resjs_path='js/bootstrap-tabdrop.js';
@@ -41,14 +42,11 @@ class easyResponsiveTabs {
 	}
 	public function ert_include_js_last(){
 		if (!apply_filters('ert_bootstrap_js_url',false)) {
-
 			?>
 			<script type="text/javascript">
-
 				jQuery('body').append('<script type="text/javascript" src="<?php echo ERT_ASSETS_URL.'js/bootstrap-dropdown.js';?>"><script>');
 			</script>
 		<?php
-
 		}
 	}
 	public function ert_activate_plugin(){
@@ -89,7 +87,6 @@ class easyResponsiveTabs {
 	}
 
 	public function ert_tab_shortcode(){
-
 		if (!current_user_can('edit_posts') && !current_user_can('edit_pages'))
 			return;
 
@@ -169,13 +166,17 @@ class easyResponsiveTabs {
 		if (trim($scontent) != "") {
 			$output = '<div class="tabbable '.$class.' '.$position.'">' . $scontent;
 			$output .= '</div>';
-
+            if (!isset($_SESSION['ert_js'])) {
+                $_SESSION['ert_js'] = '';
+            }
 			$_SESSION['ert_js'].="
 			jQuery('#oscitas-restabs-$id').tabdrop({
             'text': '".$text."'
             });";
+            if (!isset($_SESSION['ert_css'])) {
+                $_SESSION['ert_css'] = '';
+            }
 			$_SESSION['ert_css'].=$tabcolor.$tabheadcolor.$seltabcolor.$seltabheadcolor.$tabhovercolor.$contentcolor;
-
 		}
         $_ert_restabs['current_id'] = $_ert_restabs['current_id']-1;
         return $output;
@@ -248,6 +249,14 @@ class easyResponsiveTabs {
 		}
 	}
 }
+function ert_init_session () {
+    if (!session_id()) {
+        session_start();
+    }
+}
+
+add_action('init', 'ert_init_session', 1);
+
 $ertrestab= new easyResponsiveTabs();
 register_activation_hook(__FILE__, array($ertrestab,'ert_activate_plugin'));
 register_deactivation_hook(__FILE__, array($ertrestab,'ert_deactivate_plugin'));

@@ -41,6 +41,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.5 =
+
+* [fixed] Undefined index 'ert_css' issue fixed.
+
 = 1.4 =
 
 * [Update] Option to customize Tab Color.
