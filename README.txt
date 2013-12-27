@@ -41,6 +41,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.6 =
+
+* [fixed] Js warnings, if puglin not supported.
+
 = 1.5 =
 
 * [fixed] Undefined index 'ert_css' issue fixed.

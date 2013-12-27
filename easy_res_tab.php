@@ -3,7 +3,7 @@
   Plugin Name: Easy Responsive Tabs
   Plugin URI: http://www.oscitasthemes.com
   Description: Make bootstrap tabs res.
-  Version: 1.5
+  Version: 1.6
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
@@ -92,7 +92,6 @@ class easyResponsiveTabs {
 
 		if (get_user_option('rich_editing') == 'true') {
 			add_filter("mce_external_plugins", array( $this,"osc_add_ert_plugin"));
-			add_filter('mce_buttons_3', array( $this,'osc_register_ert_button'));
 		}
 	}
 
@@ -102,6 +101,7 @@ class easyResponsiveTabs {
 	}
 
 	public function osc_add_ert_plugin($plugin_array) {
+        add_filter('mce_buttons_3', array( $this,'osc_register_ert_button'));
 		$plugin_array['oscitasrestabs']=plugins_url('/assets/js/tabs_plugin.js', __FILE__);
 		return $plugin_array;
 	}
@@ -156,11 +156,9 @@ class easyResponsiveTabs {
 		}
         $output = '';
 		if($position=='tabs-below'){
-			$scontent = '<ul
-    class="tab-content" id="oscitas-restabcontent-' . $id . '">' . implode('', $_ert_restabs[$id]['panes']) . '</ul><ul class="nav osc-res-nav '.$navclass.'" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$id]['tabs']) . '</ul>';
+			$scontent = '<ul class="tab-content" id="oscitas-restabcontent-' . $id . '">' . implode('', $_ert_restabs[$id]['panes']) . '</ul><ul class="nav osc-res-nav '.$navclass.'" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$id]['tabs']) . '</ul>';
 		} else{
-			$scontent = '<ul class="nav osc-res-nav '.$navclass.'" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$id]['tabs']) . '</ul><ul
-    class="tab-content" id="oscitas-restabcontent-' . $id . '">' . implode('', $_ert_restabs[$id]['panes']) . '</ul>';
+			$scontent = '<ul class="nav osc-res-nav '.$navclass.'" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$id]['tabs']) . '</ul><ul class="tab-content" id="oscitas-restabcontent-' . $id . '">' . implode('', $_ert_restabs[$id]['panes']) . '</ul>';
 		}
 
 		if (trim($scontent) != "") {
