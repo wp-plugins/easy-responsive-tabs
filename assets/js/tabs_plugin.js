@@ -6,7 +6,6 @@
                 image : url+'/icon.png',
                 onclick : function() {
                     ert_create_oscitas_responsive_tab();
-                    //console.log('sds');
                     jQuery( "#ert-form-restabs" ).dialog({
                         dialogClass : 'wp-dialog',
                         autoOpen: true,
@@ -14,25 +13,6 @@
                         width: 800,
                         modal: true
                     });
-                    //console.log('sds');
-
-//                    jQuery.fancybox({
-//                        'autoSize':false,
-//                        'autoWidth':false,
-//                        'fitToView':false,
-//                        'height':'auto',
-//                        'topRatio':0.1,
-//                        'width':800,
-//                        'type' : 'inline',
-//                        'title' : 'Responsive Tab Shortcode',
-//                        'href' : '#ert-form-restabs',
-//                        helpers:  {
-//                            title : {
-//                                type : 'over',
-//                                position:'top'
-//                            }
-//                        }
-//                    });
                 }
             });
         },

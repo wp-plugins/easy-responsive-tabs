@@ -67,7 +67,7 @@
           type: 'shown'
         , relatedTarget: previous
         })
-      })
+      });
     }
 
   , activate: function ( element, container, callback) {
