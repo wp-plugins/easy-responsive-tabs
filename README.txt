@@ -41,6 +41,11 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.7 =
+
+* [Update] Removed extra css.
+* [fixed] more button issue fixed
+
 = 1.6 =
 
 * [fixed] Js warnings, if puglin not supported.

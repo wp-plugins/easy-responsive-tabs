@@ -3,12 +3,12 @@
   Plugin Name: Easy Responsive Tabs
   Plugin URI: http://www.oscitasthemes.com
   Description: Make bootstrap tabs res.
-  Version: 1.6
+  Version: 1.7
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
  */
-define('ERT_VERSION', '1.0');
+define('ERT_VERSION', '1.7');
 define('ERT_BASE_URL', plugins_url('',__FILE__));
 define('ERT_ASSETS_URL', ERT_BASE_URL . '/assets/');
 define('ERT_BASE_DIR_LONG', dirname(__FILE__));
@@ -19,9 +19,13 @@ class easyResponsiveTabs {
 	private $plugin_name;
 
 	function __construct(){
-		//session_start();
+
+        if(!session_id())
+		@session_start();
+
 		$_SESSION['ert_js']='';
 		$_SESSION['ert_css']='';
+
 		$pluginmenu=explode('/',plugin_basename(__FILE__));
 		$this->plugin_name=$pluginmenu[0];
 		$this->resjs_path='js/bootstrap-tabdrop.js';
@@ -32,23 +36,15 @@ class easyResponsiveTabs {
 			add_action('admin_menu', array($this, 'ert_register_admin_menu'));
 			add_filter( "plugin_action_links_".plugin_basename( __FILE__ ), array($this, 'osc_ert_settings_link' ));
 			add_action('admin_enqueue_scripts', array($this, 'ert_admin_scripts'));
-			add_action('wp_enqueue_scripts', array($this, 'ert_enqueue_scripts'));
-			add_action('wp_footer', array($this, 'ert_include_js_last'));
+			add_action('wp_enqueue_scripts', array($this, 'ert_enqueue_scripts'),-10);
+            add_action('wp_enqueue_scripts', array($this, 'ert_dynamic_scripts'),100);
 
 		}
 		add_shortcode('restabs', array($this,'ert_theme_tabs'));
 		add_shortcode('restab', array($this,'ert_theme_tab'));
 
 	}
-	public function ert_include_js_last(){
-		if (!apply_filters('ert_bootstrap_js_url',false)) {
-			?>
-			<script type="text/javascript">
-				jQuery('body').append('<script type="text/javascript" src="<?php echo ERT_ASSETS_URL.'js/bootstrap-dropdown.js';?>"><script>');
-			</script>
-		<?php
-		}
-	}
+
 	public function ert_activate_plugin(){
 		$isSet=apply_filters('ert_custom_option',false);
 		if (!$isSet) {
@@ -162,7 +158,7 @@ class easyResponsiveTabs {
 		}
 
 		if (trim($scontent) != "") {
-			$output = '<div class="tabbable '.$class.' '.$position.'">' . $scontent;
+			$output = '<div class="osc-res-tab tabbable '.$class.' '.$position.'">' . $scontent;
 			$output .= '</div>';
             if (!isset($_SESSION['ert_js'])) {
                 $_SESSION['ert_js'] = '';
@@ -203,36 +199,44 @@ class easyResponsiveTabs {
 	}
 	public function ert_enqueue_scripts(){
 		wp_enqueue_script('jquery');
-		$isSet=apply_filters('ert_custom_option',false);
-		if (!$isSet) {
-			$ertjs = get_option( 'ERT_BOOTSTRAP_JS_LOCATION', 1 );
-			$ertcss = get_option( 'ERT_BOOTSTRAP_CSS_LOCATION', 1 );
-			if($ertcss==1){
-				if (!apply_filters('ert_bootstrap_css_url',false)) {
-					wp_enqueue_style('bootstrap_tab',ERT_ASSETS_URL.'css/bootstrap_tab.min.css');
-					wp_enqueue_style('bootstrap_dropdown',ERT_ASSETS_URL.'css/bootstrap_dropdown.min.css');
-				}
-				else{
-					wp_enqueue_style('ertbootstrap', apply_filters('ert_bootstrap_css_url',false));
-				}
-			}
-			if($ertjs==1){
-				if (!apply_filters('ert_bootstrap_js_url',false)) {
-//					wp_enqueue_script('bootstrap_dropdown',ERT_ASSETS_URL.'js/bootstrap-dropdown.js',array('jquery'),ERT_VERSION,true);
-					wp_enqueue_script('bootstrap_tab',ERT_ASSETS_URL.'js/bootstrap-tab.js',array('jquery'),ERT_VERSION,true);}
-				else{
-					wp_enqueue_script('ertbootstrap', apply_filters('ert_bootstrap_js_url',false),array('jquery'),ERT_VERSION,true);
-				}
 
-			}
-		}
-		wp_enqueue_script('ert_tab_js',ERT_ASSETS_URL.$this->resjs_path,array('jquery'),ERT_VERSION,true);
-		wp_enqueue_script('ert_js',ERT_ASSETS_URL.'js/ert_js.php',array('jquery','ert_tab_js'),ERT_VERSION,true);
-		wp_enqueue_style('ert_tab_css',ERT_ASSETS_URL.$this->rescss_path);
+        $ertcss = get_option( 'ERT_BOOTSTRAP_CSS_LOCATION', 1 );
+        if($ertcss==1){
+            if (!apply_filters('ert_bootstrap_css_url',false)) {
+                wp_enqueue_style('bootstrap_tab',ERT_ASSETS_URL.'css/bootstrap_tab.min.css');
+                wp_enqueue_style('bootstrap_dropdown',ERT_ASSETS_URL.'css/bootstrap_dropdown.min.css');
+            }
+            else{
+                wp_enqueue_style('ertbootstrap', apply_filters('ert_bootstrap_css_url',false));
+            }
+        }
+
 		wp_enqueue_style('ert_tab_icon_css',ERT_ASSETS_URL.'css/res_tab_icon.css');
-		wp_enqueue_style('ert_css',ERT_ASSETS_URL.'css/ert_css.php');
+
 
 	}
+    public function ert_dynamic_scripts(){
+
+        $isSet=apply_filters('ert_custom_option',false);
+        if (!$isSet) {
+            $ertjs = get_option( 'ERT_BOOTSTRAP_JS_LOCATION', 1 );
+
+            if($ertjs==1){
+                if (!apply_filters('ert_bootstrap_js_url',false)) {
+			wp_enqueue_script('bootstrap_dropdown',ERT_ASSETS_URL.'js/bootstrap-dropdown.js',array('jquery'),ERT_VERSION,true);
+                    wp_enqueue_script('bootstrap_tab',ERT_ASSETS_URL.'js/bootstrap-tab.js',array('jquery'),ERT_VERSION,true);}
+                else{
+                    wp_enqueue_script('ertbootstrap', apply_filters('ert_bootstrap_js_url',false),array('jquery'),ERT_VERSION,true);
+                }
+
+            }
+
+        }
+        wp_enqueue_script('ert_tab_js',ERT_ASSETS_URL.$this->resjs_path,array('jquery'),ERT_VERSION,true);
+        wp_enqueue_style('ert_tab_css',ERT_ASSETS_URL.$this->rescss_path);
+        wp_enqueue_script('ert_js',ERT_ASSETS_URL.'js/ert_js.php',array('jquery','ert_tab_js'),ERT_VERSION,true);
+        wp_enqueue_style('ert_css',ERT_ASSETS_URL.'css/ert_css.php');
+    }
 
 	public function ert_admin_scripts(){
 		global $pagenow;
@@ -249,7 +253,7 @@ class easyResponsiveTabs {
 }
 function ert_init_session () {
     if (!session_id()) {
-        session_start();
+        @session_start();
     }
 }
 
