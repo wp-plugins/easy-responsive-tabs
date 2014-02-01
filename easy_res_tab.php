@@ -3,12 +3,12 @@
   Plugin Name: Easy Responsive Tabs
   Plugin URI: http://www.oscitasthemes.com
   Description: Make bootstrap tabs res.
-  Version: 1.7
+  Version: 1.8
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
  */
-define('ERT_VERSION', '1.7');
+define('ERT_VERSION', '1.8');
 define('ERT_BASE_URL', plugins_url('',__FILE__));
 define('ERT_ASSETS_URL', ERT_BASE_URL . '/assets/');
 define('ERT_BASE_DIR_LONG', dirname(__FILE__));
@@ -128,7 +128,10 @@ class easyResponsiveTabs {
 			$tabheadcolor='#oscitas-restabs-' . $id .' li a { color:'.$tabheadcolor.';}';
 		}
 		if($seltabcolor!=''){
-			$seltabcolor='#oscitas-restabs-' . $id .' li.active a { background-color:'.$seltabcolor.' !important;}';
+			//$seltabcolor='#oscitas-restabs-' . $id .' li.active a { background-color:'.$seltabcolor.' !important;}';
+			$seltabcolor='#oscitas-restabs-' . $id .' li.active > a { background-color:'.$seltabcolor.';}';
+			$seltabcolor.= '#oscitas-restabs-' . $id .' li.active > a:hover { background-color:none;}';
+			$seltabcolor.= '#oscitas-restabs-' . $id .' li.active > a:active { background-color:none;}';
 		}
 		if($seltabheadcolor!=''){
 			$seltabheadcolor='#oscitas-restabs-' . $id .' li.active a{color:'.$seltabheadcolor.';}';
@@ -170,7 +173,8 @@ class easyResponsiveTabs {
             if (!isset($_SESSION['ert_css'])) {
                 $_SESSION['ert_css'] = '';
             }
-			$_SESSION['ert_css'].=$tabcolor.$tabheadcolor.$seltabcolor.$seltabheadcolor.$tabhovercolor.$contentcolor;
+		$_SESSION['ert_css'].=$tabcolor.$tabheadcolor.$seltabheadcolor.$tabhovercolor.$seltabcolor.$contentcolor;
+			//$_SESSION['ert_css'].=$tabcolor.$tabheadcolor.$seltabcolor.$seltabheadcolor.$tabhovercolor.$contentcolor;
 		}
         $_ert_restabs['current_id'] = $_ert_restabs['current_id']-1;
         return $output;
