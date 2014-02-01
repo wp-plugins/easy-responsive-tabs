@@ -41,6 +41,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.8 =
+
+* [fixed] All dropdown buttons appear as active color issue fixed, patch by DarkShowy.
+
 = 1.7 =
 
 * [Update] Removed extra css.
