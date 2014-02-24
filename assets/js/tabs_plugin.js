@@ -31,6 +31,13 @@
     });
     tinymce.PluginManager.add('oscitasrestabs', tinymce.plugins.oscitasRestabs);
 })();
+function responsive_result_show(){
+    if(jQuery('#oscitas-restabs-responsive').prop('checked')){
+        jQuery('.responsive_result').show();
+    } else{
+        jQuery('.responsive_result').hide();
+    }
+}
 function ert_create_oscitas_responsive_tab(){
     if(jQuery('#ert-form-restabs').length){
         jQuery('#ert-form-restabs').remove();
@@ -53,13 +60,20 @@ function ert_create_oscitas_responsive_tab(){
                     <small>Check this checkbox to show selector on selected tab</small>\
 				</td>\
 			</tr>\
-			<tr>\
+        <tr>\
+				<th><label for="oscitas-restabs-responsive">Make Responsive</label></th>\
+				<td>\
+				    <input type="checkbox" id="oscitas-restabs-responsive">\
+                    <small>Check this option if you want to make tabs responsive with more button</small>\
+				</td>\
+			</tr>\
+			<tr class="responsive_result">\
 				<th><label for="oscitas-restabs-icon">Use Icon</label></th>\
 				<td>\
 				    <input type="checkbox" id="oscitas-restabs-icon">&nbsp;&nbsp;&nbsp;<i class="res_tab_icon"></i>\
 				</td>\
 			</tr>\
-			<tr>\
+			<tr class="responsive_result">\
 				<th><label for="oscitas-restabs-text">Drop Down Text</label></th>\
 				<td><input type="text" name="title" id="oscitas-restabs-text" value="More"/><br />\
 				</td>\
@@ -107,9 +121,13 @@ function ert_create_oscitas_responsive_tab(){
     var table = form.find('table');
     form.appendTo('body').hide();
     jQuery('.ert_color_selector').wpColorPicker();
+    responsive_result_show();
+    jQuery('#oscitas-restabs-responsive').click(function(){
+        responsive_result_show();
+    });
     form.find('#oscitas-restab-submit').click(function(){
 
-        var cusclass='',icon='',text='',pills='',position='',item= 0,eactive='';
+        var cusclass='',icon='',text='',pills='',position='',item= 0,eactive='',responsive='';
         var num=table.find('#oscitas-restabs-number').val();
         var color=['tabcolor','tabheadcolor','seltabcolor','seltabheadcolor','tabhovercolor','contentcolor'],ert_color='';
         jQuery.each(color,function(index,val){
@@ -122,13 +140,19 @@ function ert_create_oscitas_responsive_tab(){
             pills=' pills="nav-pills"';
 
         }
-        if(jQuery('#oscitas-restabs-icon').prop('checked')){
-            icon=' icon="true"';
+        if(jQuery('#oscitas-restabs-responsive').prop('checked')){
+            responsive=' responsive="true"';
+            if(jQuery('#oscitas-restabs-icon').prop('checked')){
+                icon=' icon="true"';
 
+            }
+            if(table.find('#oscitas-restabs-text').val()!=''){
+                text= ' text="'+table.find('#oscitas-restabs-text').val()+'"';
+            }
+        } else{
+            responsive=' responsive="false"';
         }
-        if(table.find('#oscitas-restabs-text').val()!=''){
-            text= ' text="'+table.find('#oscitas-restabs-text').val()+'"';
-        }
+
         if(table.find('#oscitas-restabs-position').val()!=''){
             position= ' position="tabs-below"';
         }
@@ -141,7 +165,7 @@ function ert_create_oscitas_responsive_tab(){
         } else{
             item=4;
         }
-            var shortcode = '[restabs'+position+pills+icon+text+cusclass+ert_color;
+            var shortcode = '[restabs'+position+pills+responsive+icon+text+cusclass+ert_color;
         shortcode += ']';
 
             for(var i=1;i<=item;i++){

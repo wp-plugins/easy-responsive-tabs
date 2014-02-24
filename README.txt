@@ -41,6 +41,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 2.0 =
+
+* [Update] New option to set either user want to make it responsive using more button or not.
+
 = 1.8 =
 
 * [fixed] All dropdown buttons appear as active color issue fixed, patch by DarkShowy.
