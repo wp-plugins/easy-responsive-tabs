@@ -41,6 +41,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 2.1 =
+
+* [Fixes] Resolved session issue to show more button.
+
 = 2.0 =
 
 * [Update] New option to set either user want to make it responsive using more button or not.
