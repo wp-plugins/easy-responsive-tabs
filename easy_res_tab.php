@@ -3,12 +3,12 @@
   Plugin Name: Easy Responsive Tabs
   Plugin URI: http://www.oscitasthemes.com
   Description: Make bootstrap tabs res.
-  Version: 2.1
+  Version: 2.2
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
  */
-define('ERT_VERSION', '2.1');
+define('ERT_VERSION', '2.2');
 define('ERT_BASE_URL', plugins_url('',__FILE__));
 define('ERT_ASSETS_URL', ERT_BASE_URL . '/assets/');
 define('ERT_BASE_DIR_LONG', dirname(__FILE__));
@@ -19,9 +19,6 @@ class easyResponsiveTabs {
     private $plugin_name;
 
     function __construct(){
-
-        if(!session_id())
-            @session_start();
 
         //$_SESSION['ert_js']='';
         //$_SESSION['ert_css']='';
@@ -104,8 +101,11 @@ class easyResponsiveTabs {
 
     public function ert_theme_tabs($params, $content = null) {
         global $_ert_restabs, $shortcode_tags;
+        global $post;
+        $slug = get_post( $post )->post_name;
         extract(shortcode_atts(array(
-            'id' => count($_ert_restabs),
+            'ids'=>count($_ert_restabs),
+            'id' => count($_ert_restabs).'-'.$slug.'-'.rand(11111,99999),
             'class' => '',
             'pills' =>'',
             'position'=>'',
@@ -119,7 +119,7 @@ class easyResponsiveTabs {
             'tabhovercolor'=>'',
             'contentcolor'=>''
         ), $params));
-        $_ert_restabs[$id] = array();
+        $_ert_restabs[$ids] = array();
         $_ert_restabs['current_id'] = count($_ert_restabs)-1;
 
 		do_shortcode($content);
@@ -157,9 +157,9 @@ class easyResponsiveTabs {
 		}
         $output = '';
         if($position=='tabs-below'){
-            $scontent = '<ul class="tab-content" id="oscitas-restabcontent-' . $id . '">' . implode('', $_ert_restabs[$id]['panes']) . '</ul><ul class="nav osc-res-nav '.$navclass.'" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$id]['tabs']) . '</ul>';
+            $scontent = '<ul class="tab-content" id="oscitas-restabcontent-' . $id . '">' . implode('', $_ert_restabs[$ids]['panes']) . '</ul><ul class="nav osc-res-nav '.$navclass.'" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$ids]['tabs']) . '</ul>';
         } else{
-            $scontent = '<ul class="nav osc-res-nav '.$navclass.'" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$id]['tabs']) . '</ul><ul class="tab-content" id="oscitas-restabcontent-' . $id . '">' . implode('', $_ert_restabs[$id]['panes']) . '</ul>';
+            $scontent = '<ul class="nav osc-res-nav '.$navclass.'" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$ids]['tabs']) . '</ul><ul class="tab-content" id="oscitas-restabcontent-' . $id . '">' . implode('', $_ert_restabs[$ids]['panes']) . '</ul>';
         }
 
         if (trim($scontent) != "") {
@@ -254,6 +254,8 @@ class easyResponsiveTabs {
             wp_enqueue_script('jquery');
             wp_enqueue_style('wp-color-picker');
             wp_enqueue_script('wp-color-picker');
+            wp_enqueue_script('jquery-ui-dialog');
+            wp_enqueue_style ( 'wp-jquery-ui-dialog');
             if (!apply_filters('ert_custom_bootstrap_admin_css',false)) {
                 wp_enqueue_style('bootstrap_admin', ERT_ASSETS_URL.'css/bootstrap_admin.min.css');
             }

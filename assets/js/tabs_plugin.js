@@ -7,7 +7,7 @@
                 onclick : function() {
                     ert_create_oscitas_responsive_tab();
                     jQuery( "#ert-form-restabs" ).dialog({
-                        dialogClass : 'wp-dialog',
+                        dialogClass : 'wp-dialog osc-dialog',
                         autoOpen: true,
                         height: 'auto',
                         width: 800,
