@@ -8,7 +8,7 @@
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
 
-.osc-res-tab a{color:#428bca;text-decoration:none;}a:hover,a:focus{color:#2a6496;text-decoration:underline;}
+.osc-res-tab a{color:#428bca;text-decoration:none;}.osc-res-tab a:hover,.osc-res-tab a:focus{color:#2a6496;text-decoration:underline;}
 .osc-res-tab a:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}
 .osc-res-tab .pull-right {float: right !important;}
 .osc-res-tab .nav{margin-bottom:0;padding-left:0;list-style:none;}.osc-res-tab .nav:before,.nav:after{content:" ";display:table;}
