@@ -43,6 +43,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 2.3 =
+
+* [Fixes] link tag css issue resolved.
+
 = 2.2 =
 
 * [Update] Wordpress 3.9 ready.
