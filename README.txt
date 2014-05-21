@@ -41,6 +41,8 @@ It's that simple ... just what the name suggests
 
 1. Easy Responsive Tabs Output
 
+2. Create shortcode screen
+
 == Changelog ==
 
 = 2.3 =
