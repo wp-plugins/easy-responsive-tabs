@@ -54,6 +54,14 @@ function ert_create_oscitas_responsive_tab(){
 				</td>\
 			</tr>\
 			<tr>\
+				<th><label for="oscitas-restabs-alignment">Tabs Alignment</label></th>\
+				<td><select name="type" id="oscitas-restabs-alignment">\
+					<option value="osc-tabs-left" selected="selected">Left</option>\
+					<option value="osc-tabs-right">Right</option>\
+				</select><br />\
+				</td>\
+			</tr>\
+			<tr>\
 				<th><label for="oscitas-restabs-pills">Tabs With Pills</label></th>\
 				<td>\
 				    <input type="checkbox" id="oscitas-restabs-pills">\
@@ -155,6 +163,10 @@ function ert_create_oscitas_responsive_tab(){
 
         if(table.find('#oscitas-restabs-position').val()!=''){
             position= ' position="tabs-below"';
+        }
+
+        if(table.find('#oscitas-restabs-alignment').val()!=''){
+            position= ' alignment="'+table.find('#oscitas-restabs-alignment').val()+'"';
         }
 
         if(table.find('#oscitas-restabs-class').val()!=''){

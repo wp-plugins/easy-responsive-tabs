@@ -3,12 +3,12 @@
   Plugin Name: Easy Responsive Tabs
   Plugin URI: http://www.oscitasthemes.com
   Description: Make bootstrap tabs res.
-  Version: 2.3
+  Version: 2.4
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
  */
-define('ERT_VERSION', '2.3');
+define('ERT_VERSION', '2.4');
 define('ERT_BASE_URL', plugins_url('',__FILE__));
 define('ERT_ASSETS_URL', ERT_BASE_URL . '/assets/');
 define('ERT_BASE_DIR_LONG', dirname(__FILE__));
@@ -20,7 +20,7 @@ class easyResponsiveTabs {
 
     function __construct(){
 
-        //$_SESSION['ert_js']='';
+        $_SESSION['ert_js']='';
         //$_SESSION['ert_css']='';
 
         $pluginmenu=explode('/',plugin_basename(__FILE__));
@@ -109,6 +109,7 @@ class easyResponsiveTabs {
             'class' => '',
             'pills' =>'',
             'position'=>'',
+            'alignment'=>'osc-tabs-left',
             'responsive'=>'true',
             'text'=>'',
             'icon'=>'',
@@ -157,23 +158,30 @@ class easyResponsiveTabs {
 		}
         $output = '';
         if($position=='tabs-below'){
-            $scontent = '<ul class="tab-content" id="oscitas-restabcontent-' . $id . '">' . implode('', $_ert_restabs[$ids]['panes']) . '</ul><ul class="nav osc-res-nav '.$navclass.'" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$ids]['tabs']) . '</ul>';
+            $scontent = '<div style="clear:both;width: 100%;" class="'.$alignment.'-div"><ul class="tab-content" id="oscitas-restabcontent-' . $id . '">' . implode('', $_ert_restabs[$ids]['panes']) . '</ul></div><div style="clear:both;width: 100%;"><ul class="nav osc-res-nav '.$navclass.' '.$alignment.'-ul" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$ids]['tabs']) . '</ul></div>';
         } else{
-            $scontent = '<ul class="nav osc-res-nav '.$navclass.'" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$ids]['tabs']) . '</ul><ul class="tab-content" id="oscitas-restabcontent-' . $id . '">' . implode('', $_ert_restabs[$ids]['panes']) . '</ul>';
+            $scontent = '<div style="clear:both;width: 100%;"><ul class="nav osc-res-nav '.$navclass.' '.$alignment.'-ul" id="oscitas-restabs-' . $id . '">' . implode('', $_ert_restabs[$ids]['tabs']) . '</ul></div><div style="clear:both;width: 100%;"><ul class="tab-content" id="oscitas-restabcontent-' . $id . '">' . implode('', $_ert_restabs[$ids]['panes']) . '</ul></div>';
         }
 
         if (trim($scontent) != "") {
-            $output = '<div class="osc-res-tab tabbable '.$class.' '.$position.'">' . $scontent;
+            $output = '<div class="osc-res-tab tabbable '.$class.' '.$position.' '.$alignment.'">' . $scontent;
             $output .= '</div>';
             if (!isset($_SESSION['ert_js'])) {
                 $_SESSION['ert_js'] = '';
             }
             if($responsive!='false'){
-            $_SESSION['ert_js'].="
-			jQuery('#oscitas-restabs-$id').tabdrop({
-            'text': '".$text."'
-            });";
+                $autoselect -= ($autoselect ? 1: 0);
+            $_SESSION['ert_js'].= <<<EOF
+                    jQuery('#oscitas-restabs-$id').tabdrop({'text': '$text'});
+EOF;
             }
+
+            $_SESSION['ert_js'].= <<<EOF
+            var tabHashId = window.location.hash.substr(1);
+            if (tabHashId) {
+                jQuery('#oscitas-restabs-$id a[href="#'+tabHashId+'"]').tab('show');
+            }
+EOF;
             if (!isset($_SESSION['ert_css'])) {
                 $_SESSION['ert_css'] = '';
             }
@@ -266,6 +274,7 @@ class easyResponsiveTabs {
 function ert_init_session () {
     if (!session_id()) {
         @session_start();
+        unset($_SESSION['ert_js']);
     }
 }
 
