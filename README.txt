@@ -41,9 +41,14 @@ It's that simple ... just what the name suggests
 
 1. Easy Responsive Tabs Output
 
-2. Create shortcode screen
-
 == Changelog ==
+
+= 2.4 =
+
+* [Update] new option to set the default tab user want to open on page load
+* [Update] new option to set the external page link to load any particular tab. for details check http://demo.oscitasthemes.com/demos/easy-responsive-tabs/
+* [Update] new option to set tab left/right align.
+
 
 = 2.3 =
 
