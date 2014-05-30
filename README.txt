@@ -45,6 +45,8 @@ For bootstrap shortcodes, check our plugin [Easy Bootstrap Shortcodes](http://wo
 
 Looking for parallax slider, check this [Easy Wordpress Parallax Slider](http://wordpress.org/plugins/easy-wp-parallax-slider/)
 
+Follow us [@Twitter](https://twitter.com/oscitasthemes), [@facebook](https://www.facebook.com/oscitaswebsolution), [@google+](https://plus.google.com/109122908951553852347/posts)
+
 == Installation ==
 
 1.Upload:
