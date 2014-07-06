@@ -18,7 +18,7 @@
 .osc-res-tab .nav .open>a,.osc-res-tab .nav .open>a:hover,.nav .open>a:focus{background-color:#eeeeee;border-color:#428bca;}
 .osc-res-tab .nav .nav-divider{height:1px;margin:9px 0;overflow:hidden;background-color:#e5e5e5;}
 .osc-res-tab .nav>li>a>img{max-width:none;}
-.osc-res-tab .nav-tabs{border-bottom:1px solid #dddddd;}.osc-res-tab .nav-tabs>li{float:left;margin-bottom:-1px;}.osc-res-tab .nav-tabs>li>a{margin-right:2px;line-height:1.428571429;border:1px solid transparent;border-radius:4px 4px 0 0;}.osc-res-tab .nav-tabs>li>a:hover{border-color:#eeeeee #eeeeee #dddddd;}
+.osc-res-tab .nav-tabs{border-bottom:1px solid #dddddd;}.osc-res-tab .nav-tabs>li{float:left;margin:0 0 -1px 0;}.osc-res-tab .nav-tabs>li>a{margin-right:2px;line-height:1.428571429;border:1px solid transparent;border-radius:4px 4px 0 0;}.osc-res-tab .nav-tabs>li>a:hover{border-color:#eeeeee #eeeeee #dddddd;}
 .osc-res-tab .nav-tabs>li.active>a,.osc-res-tab .nav-tabs>li.active>a:hover,.osc-res-tab .nav-tabs>li.active>a:focus{color:#555555;background-color:#ffffff;border:1px solid #dddddd;border-bottom-color:transparent;cursor:default;}
 .osc-res-tab.tabs-below .nav-tabs>li.active>a,.osc-res-tab.tabs-below .nav-tabs>li.active>a:hover,.osc-res-tab.tabs-below .nav-tabs>li.active>a:focus{color:#555555;background-color:#ffffff;border:1px solid #dddddd;border-bottom-color:transparent;cursor:default;margin-top: -2px;}
 .osc-res-tab .nav-tabs.nav-justified{width:100%;border-bottom:0;}.nav-tabs.nav-justified>li{float:none;}.osc-res-tab .nav-tabs.nav-justified>li>a{text-align:center;}
@@ -98,8 +98,50 @@
     display:block;
     float:left;
     list-style:none;
-    margin:0;
+    margin:-1px 0;
     padding:0;
     position:relative;
     right:50%;
+}
+.osc-res-tab.osc-tabs-center > div {
+    border-bottom: 1px solid #DDDDDD;
+    display: inline-block;
+}
+.osc-res-tab.osc-tabs-center .nav-tabs {
+    border: medium none;
+}
+.osc-res-tab.osc-tabs-right > div {
+    border-bottom: 1px solid #DDDDDD;
+    display: inline-block;
+}
+.osc-res-tab.osc-tabs-right .nav-tabs {
+    float: right;
+    border-bottom: medium none;
+}
+
+
+
+/*Setting page css*/
+.toplevel_page_easy-responsive-tabs .wrap {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E0E0E0;
+    padding: 0;
+}
+.toplevel_page_easy-responsive-tabs .wrap h2 {
+    border-bottom: 1px solid #E0E0E0;
+    font-size: 18px;
+    padding: 8px;
+}
+.toplevel_page_easy-responsive-tabs #ert_setting{
+    padding: 10px;
+}
+.toplevel_page_easy-responsive-tabs #ert_setting .form-table tr,
+.toplevel_page_easy-responsive-tabs #ert_setting .form-table tr td,
+.toplevel_page_easy-responsive-tabs #ert_setting .form-table tr th{
+    border: 1px solid #E0E0E0;
+    padding: 10px;
+}
+.toplevel_page_easy-responsive-tabs #ert_setting .form-table tr td label{
+    margin: 0 10px 0 0;
+    font-size: 13px;
 }

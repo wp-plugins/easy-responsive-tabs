@@ -47,7 +47,7 @@ function ert_create_oscitas_responsive_tab(){
     var form = jQuery('<div id="ert-form-restabs" title="Easy Responsive Tab Shortcode"><table id="oscitas-table" class="form-table" style="margin-top: 0px;">\
 			<tr>\
 				<th><label for="oscitas-restabs-position">Show Tabs Position</label></th>\
-				<td><select name="type" id="oscitas-restabs-position">\
+				<td colspan="3"><select name="type" id="oscitas-restabs-position">\
 					<option value="">Top</option>\
 					<option value="tabs-below">Bottom</option>\
 				</select><br />\
@@ -55,47 +55,46 @@ function ert_create_oscitas_responsive_tab(){
 			</tr>\
 			<tr>\
 				<th><label for="oscitas-restabs-alignment">Tabs Alignment</label></th>\
-				<td><select name="type" id="oscitas-restabs-alignment">\
+				<td colspan="3"><select name="type" id="oscitas-restabs-alignment">\
 					<option value="osc-tabs-left" selected="selected">Left</option>\
+					<option value="osc-tabs-center">center</option>\
 					<option value="osc-tabs-right">Right</option>\
 				</select><br />\
 				</td>\
 			</tr>\
 			<tr>\
 				<th><label for="oscitas-restabs-pills">Tabs With Pills</label></th>\
-				<td>\
+				<td colspan="3">\
 				    <input type="checkbox" id="oscitas-restabs-pills">\
                     <small>Check this checkbox to show selector on selected tab</small>\
 				</td>\
 			</tr>\
         <tr>\
 				<th><label for="oscitas-restabs-responsive">Make Responsive</label></th>\
-				<td>\
+				<td colspan="3">\
 				    <input type="checkbox" id="oscitas-restabs-responsive">\
                     <small>Check this option if you want to make tabs responsive with more button</small>\
 				</td>\
 			</tr>\
 			<tr class="responsive_result">\
 				<th><label for="oscitas-restabs-icon">Use Icon</label></th>\
-				<td>\
+				<td colspan="3">\
 				    <input type="checkbox" id="oscitas-restabs-icon">&nbsp;&nbsp;&nbsp;<i class="res_tab_icon"></i>\
 				</td>\
 			</tr>\
 			<tr class="responsive_result">\
 				<th><label for="oscitas-restabs-text">Drop Down Text</label></th>\
-				<td><input type="text" name="title" id="oscitas-restabs-text" value="More"/><br />\
+				<td colspan="3"><input type="text" name="title" id="oscitas-restabs-text" value="More"/><br />\
 				</td>\
 			</tr>\
 			<tr>\
 				<th><label for="oscitas-restabs-number">Number of Tabs</label></th>\
-				<td><input type="text" name="title" id="oscitas-restabs-number" value="4"/><br/>Enter a numeric value, Default is 4</td>\
+				<td  colspan="3"><input type="text" name="title" id="oscitas-restabs-number" value="4"/>&nbsp;&nbsp;Enter a numeric value, Default is 4</td>\
 			</tr>\
 			<tr>\
 				<th><label for="oscitas-restabs-tabcolor">Tab Color</label></th>\
 				<td> <input type="text" value="" id="oscitas-restabs-tabcolor" class="ert_color_selector" />\
                 </div></td>\
-			</tr>\
-			<tr>\
 				<th><label for="oscitas-restabs-tabheadcolor">Tab Heading Color</label></th>\
 				<td> <input type="text" value="" id="oscitas-restabs-tabheadcolor" class="ert_color_selector" />\
                 </div></td>\
@@ -103,22 +102,18 @@ function ert_create_oscitas_responsive_tab(){
 			<tr>\
 				<th><label for="oscitas-restabs-seltabcolor">Active Tab Color</label></th>\
 				<td> <input type="text" value="" id="oscitas-restabs-seltabcolor" class="ert_color_selector" /></td>\
-			</tr>\
-			<tr>\
 				<th><label for="oscitas-restabs-seltabheadcolor">Active Tab Heading Color</label></th>\
 				<td> <input type="text" value="" id="oscitas-restabs-seltabheadcolor" class="ert_color_selector" /></td>\
 			</tr>\
 			<tr>\
 				<th><label for="oscitas-restabs-tabhovercolor">Tab Hover Color</label></th>\
 				<td> <input type="text" value="" id="oscitas-restabs-tabhovercolor" class="ert_color_selector" /></td>\
-			</tr>\
-			<tr>\
-				<th><label for="oscitas-restabs-contentcolor">Tab Content BG Color</label></th>\
+			    <th><label for="oscitas-restabs-contentcolor">Tab Content BG Color</label></th>\
 				<td> <input type="text" value="" id="oscitas-restabs-contentcolor" class="ert_color_selector" /></td>\
 			</tr>\
              <tr>\
 				<th><label for="oscitas-restabs-class">Custom Class</label></th>\
-				<td><input type="text" name="line" id="oscitas-restabs-class" value=""/><br />\
+				<td colspan="3"><input type="text" name="line" id="oscitas-restabs-class" value=""/><br />\
 				</td>\
 			</tr>\
 		</table>\
@@ -166,7 +161,7 @@ function ert_create_oscitas_responsive_tab(){
         }
 
         if(table.find('#oscitas-restabs-alignment').val()!=''){
-            position= ' alignment="'+table.find('#oscitas-restabs-alignment').val()+'"';
+            position += ' alignment="'+table.find('#oscitas-restabs-alignment').val()+'"';
         }
 
         if(table.find('#oscitas-restabs-class').val()!=''){

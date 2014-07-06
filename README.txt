@@ -69,6 +69,11 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 2.5 =
+
+* [Update] new center position option is added
+* [Fixes] Show blow option is fixed
+
 = 2.4 =
 
 * [Update] new option to set the default tab user want to open on page load
