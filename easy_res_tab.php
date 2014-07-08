@@ -3,7 +3,7 @@
   Plugin Name: Easy Responsive Tabs
   Plugin URI: http://www.oscitasthemes.com
   Description: Make bootstrap tabs res.
-  Version: 2.5
+  Version: 2.6
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
@@ -252,8 +252,8 @@ EOF;
         }
         wp_enqueue_script('ert_tab_js',ERT_ASSETS_URL.$this->resjs_path,array('jquery'),ERT_VERSION,true);
         wp_enqueue_style('ert_tab_css',ERT_ASSETS_URL.$this->rescss_path);
-        wp_enqueue_script('ert_js',ERT_ASSETS_URL.'js/ert_js.php',array('jquery','ert_tab_js'),ERT_VERSION,true);
-        wp_enqueue_style('ert_css',ERT_ASSETS_URL.'css/ert_css.php');
+        if (isset($_SESSION['ert_js']))  wp_enqueue_script('ert_js',ERT_ASSETS_URL.'js/ert_js.php',array('jquery','ert_tab_js'),ERT_VERSION,true);
+        if (isset($_SESSION['ert_css'])) wp_enqueue_style('ert_css',ERT_ASSETS_URL.'css/ert_css.php');
     }
 
     public function ert_admin_scripts(){

@@ -1,5 +1,7 @@
 <?php
 header("Content-type: text/css");
 session_start();
-echo $_SESSION['ert_css'];
+if (isset($_SESSION['ert_css'])) {
+    echo $_SESSION['ert_css'];
+}
 ?>

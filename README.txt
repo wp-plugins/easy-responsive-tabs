@@ -69,6 +69,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 2.6 =
+
+* [Fixes] fixed the undefined index ert_css & ert_js error message issue.
+
 = 2.5 =
 
 * [Update] new center position option is added
