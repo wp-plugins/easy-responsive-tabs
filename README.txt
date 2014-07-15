@@ -11,6 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Easy Responsive Tabs enable you to add responsive bootstrap 3.0 tabs in your pages, post and custom post in simplest manner.
 
 == Description ==
+>For plugin support go to [http://support.oscitasthemes.com](http://support.oscitasthemes.com)
 
 >Wordpress 3.9 ready
 
