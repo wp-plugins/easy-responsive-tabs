@@ -70,6 +70,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 2.7 =
+
+* [Fixes] Fixed first time css load issue.
+
 = 2.6 =
 
 * [Fixes] fixed the undefined index ert_css & ert_js error message issue.
