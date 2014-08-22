@@ -70,6 +70,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 2.8 =
+
+* [Fixes] Fixed the Tab Color Issue - Color appears when logged in.
+
 = 2.7 =
 
 * [Fixes] Fixed first time css load issue.

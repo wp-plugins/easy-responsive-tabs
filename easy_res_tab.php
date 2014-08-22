@@ -3,12 +3,12 @@
   Plugin Name: Easy Responsive Tabs
   Plugin URI: http://www.oscitasthemes.com
   Description: Make bootstrap tabs res.
-  Version: 2.7
+  Version: 2.8
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
  */
-define('ERT_VERSION', '2.7');
+define('ERT_VERSION', '2.8');
 define('ERT_BASE_URL', plugins_url('',__FILE__));
 define('ERT_ASSETS_URL', ERT_BASE_URL . '/assets/');
 define('ERT_BASE_DIR_LONG', dirname(__FILE__));
@@ -20,8 +20,12 @@ class easyResponsiveTabs {
 
     function __construct(){
 
-        $_SESSION['ert_js']='';
-        //$_SESSION['ert_css']='';
+        if (!isset($_SESSION['ert_js'])) {
+            $_SESSION['ert_js'] = array();
+        }
+        if (!isset($_SESSION['ert_css'])) {
+            $_SESSION['ert_css'] = array();
+        }
 
         $pluginmenu=explode('/',plugin_basename(__FILE__));
         $this->plugin_name=$pluginmenu[0];
@@ -101,6 +105,9 @@ class easyResponsiveTabs {
 
     public function ert_theme_tabs($params, $content = null) {
         global $_ert_restabs, $shortcode_tags;
+        if (!count($_ert_restabs)) {
+            $_ert_restabs = array('current_id'=>0);
+        }
         global $post;
         $slug = get_post( $post )->post_name;
         extract(shortcode_atts(array(
@@ -166,29 +173,28 @@ class easyResponsiveTabs {
         if (trim($scontent) != "") {
             $output = '<div class="osc-res-tab tabbable '.$class.' '.$position.' '.$alignment.'">' . $scontent;
             $output .= '</div>';
-            if (!isset($_SESSION['ert_js'])) {
-                $_SESSION['ert_js'] = '';
-            }
+
+            $jscontent='';
             if($responsive!='false'){
-                $autoselect -= ($autoselect ? 1: 0);
-            $_SESSION['ert_js'].= <<<EOF
+//                $autoselect -= ($autoselect ? 1: 0);
+            $jscontent.= <<<EOF
                     jQuery('#oscitas-restabs-$id').tabdrop({'text': '$text'});
 EOF;
             }
 
-            $_SESSION['ert_js'].= <<<EOF
+            $jscontent.= <<<EOF
             var tabHashId = window.location.hash.substr(1);
             if (tabHashId) {
                 jQuery('#oscitas-restabs-$id a[href="#'+tabHashId+'"]').tab('show');
             }
 EOF;
-            if (!isset($_SESSION['ert_css'])) {
-                $_SESSION['ert_css'] = '';
-            }
+            $_SESSION['ert_js'][$id]=$jscontent;
 
-		$_SESSION['ert_css'].=$tabcolor.$tabheadcolor.$seltabheadcolor.$tabhovercolor.$seltabcolor.$contentcolor;
+		$_SESSION['ert_css'][$id]=$tabcolor.$tabheadcolor.$seltabheadcolor.$tabhovercolor.$seltabcolor.$contentcolor;
 			//$_SESSION['ert_css'].=$tabcolor.$tabheadcolor.$seltabcolor.$seltabheadcolor.$tabhovercolor.$contentcolor;
 		}
+        wp_enqueue_style('ert_tab_css',ERT_ASSETS_URL.$this->rescss_path);
+        wp_enqueue_style('ert_css',ERT_ASSETS_URL.'css/ert_css.php');
 
         $_ert_restabs['current_id'] = $_ert_restabs['current_id']-1;
         return $output;
@@ -207,13 +213,14 @@ EOF;
         if (!isset($_ert_restabs[$index]['tabs'])) {
             $_ert_restabs[$index]['tabs'] = array();
         }
+        if (!isset($_ert_restabs[$index]['panes'])) {
+            $_ert_restabs[$index]['panes'] = array();
+        }
         $pane_id = 'ert_pane' . $index . '-' .  count($_ert_restabs[$index]['tabs']);
         $_ert_restabs[$index]['tabs'][] = '<li class="' . $active . '"><a href="#' . $pane_id . '" data-toggle="tab">' . $title
             . '</a></li>';
-        $_ert_restabs[$index]['panes'][] = '<li class="tab-pane ' . $active . '" id="'
-            . $pane_id . '">'
-            . do_shortcode
-            (trim($content)) . '</li>';
+        $_ert_restabs[$index]['panes'][] = '<li class="tab-pane ' . $active . '" id="'. $pane_id . '">'
+            . do_shortcode (trim($content)) . '</li>';
     }
     public function ert_enqueue_scripts(){
         wp_enqueue_script('jquery');
@@ -250,12 +257,11 @@ EOF;
             }
 
         }
+
         wp_enqueue_script('ert_tab_js',ERT_ASSETS_URL.$this->resjs_path,array('jquery'),ERT_VERSION,true);
-        wp_enqueue_style('ert_tab_css',ERT_ASSETS_URL.$this->rescss_path);
-        //if (isset($_SESSION['ert_js']))
-            wp_enqueue_script('ert_js',ERT_ASSETS_URL.'js/ert_js.php',array('jquery','ert_tab_js'),ERT_VERSION,true);
-        //if (isset($_SESSION['ert_css']))
-            wp_enqueue_style('ert_css',ERT_ASSETS_URL.'css/ert_css.php');
+
+        wp_enqueue_script('ert_js',ERT_ASSETS_URL.'js/ert_js.php',array('jquery','ert_tab_js'),ERT_VERSION,true);
+
     }
 
     public function ert_admin_scripts(){
@@ -276,7 +282,6 @@ EOF;
 function ert_init_session () {
     if (!session_id()) {
         @session_start();
-        unset($_SESSION['ert_js']);
     }
 }
 
