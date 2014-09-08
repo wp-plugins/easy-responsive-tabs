@@ -98,7 +98,7 @@ class easyResponsiveTabs {
     }
 
     public function osc_add_ert_plugin($plugin_array) {
-        add_filter('mce_buttons_3', array( $this,'osc_register_ert_button'));
+        add_filter('mce_buttons', array( $this,'osc_register_ert_button'),903.498);
         $plugin_array['oscitasrestabs']=plugins_url('/assets/js/tabs_plugin.js', __FILE__);
         return $plugin_array;
     }
