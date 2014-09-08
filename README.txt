@@ -13,7 +13,7 @@ Easy Responsive Tabs enable you to add responsive bootstrap 3.0 tabs in your pag
 == Description ==
 >For plugin support go to [http://support.oscitasthemes.com](http://support.oscitasthemes.com)
 
->Wordpress 3.9 ready
+>Wordpress 4.0 ready
 
 Easy Responsive Tabs is bootstrap 3.0 compatible plugin which add icons to wordpress editor (tinyMCE Shortcode Buttons) and one can add bootstrap style responsive tabs to their website just by clicking on tinyMCE  editor icon.
 
@@ -69,6 +69,10 @@ It's that simple ... just what the name suggests
 2. ERT Shortcode Screen
 
 == Changelog ==
+
+= 3.0 =
+
+* [Update] Wordpress 4.0 ready.
 
 = 2.8 =
 
