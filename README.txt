@@ -7,6 +7,7 @@ Tested up to: 3.6.1
 Stable tag: 2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Donate link: http://oscitasthemes.com/support-our-free-plugins/
 
 Easy Responsive Tabs enable you to add responsive bootstrap 3.0 tabs in your pages, post and custom post in simplest manner.
 
